@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
-import TaskList from '../TaskList';
+import React, { useState, useRef } from 'react';
+import { InputValue } from '../@type/typeInput.type';
 
 type TaskInputProps = {
   todo: (name: string) => void;
+  inputValue: InputValue | undefined,
 };
 
 export default function TaskInput(props: TaskInputProps) {
-  const { todo } = props;
+  const { todo,  inputValue} = props;
   const [name, setName] = useState<string>('');
+  const inputRef = useRef();
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!(name.trim() == '')) {
@@ -37,7 +39,7 @@ export default function TaskInput(props: TaskInputProps) {
           onChange={(e) => handleOnChange(e)}
         />
         <button className="border-2 border-black p-2 rounded-md text-purple">
-          ➕
+          {inputValue?.status ? '✅' : '➕'}
         </button>
       </form>
     </div>
